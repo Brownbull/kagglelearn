@@ -28,11 +28,20 @@ from sklearn.model_selection import train_test_split
 # run this script.
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=0)
 
+
+def get_mae(max_leaf_nodes, predictors_train, predictors_val, targ_train, targ_val):
+    model = DecisionTreeRegressor(
+        max_leaf_nodes=max_leaf_nodes, random_state=0)
+    model.fit(predictors_train, targ_train)
+    preds_val = model.predict(predictors_val)
+    mae = mean_absolute_error(targ_val, preds_val)
+    return(mae)
+
 # Define Model
-melbourne_model = DecisionTreeRegressor()
+# melbourne_model = DecisionTreeRegressor()
 
 # Fit Model
-melbourne_model.fit(train_X, train_y)
+# melbourne_model.fit(train_X, train_y)
 # melbourne_model.fit(X, y)
 # print("Making predictions for the following 5 houses:")
 # print(X.head())
@@ -40,11 +49,13 @@ melbourne_model.fit(train_X, train_y)
 # print(melbourne_model.predict(X.head()))
 
 # get predicted prices on validation data
-val_predictions = melbourne_model.predict(val_X)
-print(mean_absolute_error(val_y, val_predictions))
+# val_predictions = melbourne_model.predict(val_X)
+# print(mean_absolute_error(val_y, val_predictions))
 
-
-
+for max_leaf_nodes in [5, 50, 500, 5000]:
+    my_mae = get_mae(max_leaf_nodes, train_X, val_X, train_y, val_y)
+    print("Max leaf nodes: %d  \t\t Mean Absolute Error:  %d" %
+          (max_leaf_nodes, my_mae))
 
 
 
