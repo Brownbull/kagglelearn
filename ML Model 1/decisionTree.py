@@ -17,16 +17,16 @@ melbourne_predictors = ['LotArea', 'YearBuilt', '1stFlrSF', '2ndFlrSF',
 # Predictors Location
 X = melbourne_data[melbourne_predictors]
 
-# Model Fit imports
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_absolute_error
-
 from sklearn.model_selection import train_test_split
 # split data into training and validation data, for both predictors and target
 # The split is based on a random number generator. Supplying a numeric value to
 # the random_state argument guarantees we get the same split every time we
 # run this script.
 train_X, val_X, train_y, val_y = train_test_split(X, y, random_state=0)
+
+# Model Fit imports
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_absolute_error
 
 
 def get_mae(max_leaf_nodes, predictors_train, predictors_val, targ_train, targ_val):
